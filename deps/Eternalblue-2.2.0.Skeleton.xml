@@ -1,0 +1,44 @@
+<t:config xmlns:t="urn:trch" id="0f38f55b6a88feccfb846d3d10ab4687e652e63e" configversion="2.2.0.0" name="Eternalblue" version="2.2.0" schemaversion="2.1.0">
+<t:inputparameters>
+<t:parameter name="DaveProxyPort" description="DAVE Core/Proxy Hookup connection port" type="TcpPort" format="Scalar" hidden="true" valid="true">
+<t:default>0</t:default>
+<t:value>0</t:value>
+</t:parameter>
+<t:parameter name="NetworkTimeout" description="Timeout for blocking network calls (in seconds). Use -1 for no timeout." type="S16" format="Scalar" valid="true">
+<t:default>60</t:default>
+<t:value>%TIMEOUT%</t:value>
+</t:parameter>
+<t:parameter name="TargetIp" description="Target IP Address" type="IPv4" format="Scalar" valid="true">
+<t:value>%RHOST%</t:value>
+</t:parameter>
+<t:parameter name="TargetPort" description="Port used by the SMB service for exploit connection" type="TcpPort" format="Scalar" valid="true">
+<t:default>445</t:default>
+<t:value>%RPORT%</t:value>
+</t:parameter>
+<t:parameter name="VerifyTarget" description="Validate the SMB string from target against the target selected before exploitation." type="Boolean" format="Scalar" valid="true">
+<t:default>true</t:default>
+<t:value>true</t:value>
+</t:parameter>
+<t:parameter name="VerifyBackdoor" description="Validate the presence of the DOUBLE PULSAR backdoor before throwing. This option must be enabled for multiple exploit attempts." type="Boolean" format="Scalar" valid="true">
+<t:default>true</t:default>
+<t:value>true</t:value>
+</t:parameter>
+<t:parameter name="MaxExploitAttempts" description="Number of times to attempt the exploit and groom. Disabled for XP/2K3." type="U32" format="Scalar" valid="true">
+<t:default>3</t:default>
+<t:value>3</t:value>
+</t:parameter>
+<t:parameter name="GroomAllocations" description="Number of large SMBv2 buffers (Vista+) or SessionSetup allocations (XK/2K3) to do." type="U32" format="Scalar" valid="true">
+<t:default>12</t:default>
+<t:value>12</t:value>
+</t:parameter>
+<t:parameter name="ShellcodeBuffer" description="Shellcode buffer in hex (hint: use 'F:&lt;FILENAME&gt;' to load from file)" type="Buffer" format="Scalar" hidden="true" required="false"></t:parameter>
+<t:paramchoice name="Target" description="Operating System, Service Pack, and Architecture of target OS">
+<t:value>%TARGET%</t:value>
+<t:paramgroup name="XP" description="Windows XP 32-Bit All Service Packs"></t:paramgroup>
+<t:paramgroup name="WIN72K8R2" description="Windows 7 and 2008 R2 32-Bit and 64-Bit All Service Packs"></t:paramgroup>
+</t:paramchoice>
+</t:inputparameters>
+<t:outputparameters>
+<t:parameter name="DoublePulsarPresent" description="Set to true if the DOUBLEPULSAR backdoor was already installed and the exploit did not have to be thrown" type="Boolean" format="Scalar"></t:parameter>
+</t:outputparameters>
+</t:config>

