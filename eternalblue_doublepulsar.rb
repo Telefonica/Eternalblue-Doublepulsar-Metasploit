@@ -24,7 +24,7 @@ class MetasploitModule < Msf::Exploit::Remote
           'BadChars'   => "\x00\x0a\x0d",
         },
       'Platform'       => 'win',
-      'DefaultTarget'  => 9,
+      'DefaultTarget'  => 8,
       'Targets'        =>
         [
 	  ['Windows XP (all services pack) (x86) (x64)',{}],
