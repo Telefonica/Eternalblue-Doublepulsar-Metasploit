@@ -47,8 +47,8 @@ class MetasploitModule < Msf::Exploit::Remote
 
 	register_options([
 		OptEnum.new('TARGETARCHITECTURE', [true,'Target Architecture','x86',['x86','x64']]),
-		OptString.new('ETERNALBLUEPATH',[true,'Path directory of Eternalblue','/root/shadowbroker/windows/lib/x86-Windows/']),
-		OptString.new('DOUBLEPULSARPATH',[true,'Path directory of Doublepulsar','/root/shadowbroker/windows/lib/x86-Windows/']),
+		OptString.new('ETERNALBLUEPATH',[true,'Path directory of Eternalblue','/root/Eternalblue-Doublepulsar-Metasploit/deps/']),
+		OptString.new('DOUBLEPULSARPATH',[true,'Path directory of Doublepulsar','/root/Eternalblue-Doublepulsar-Metasploit/deps/']),
 		OptString.new('WINEPATH',[true,'WINE drive_c path','/root/.wine/drive_c/']),
 		OptString.new('PROCESSINJECT',[true,'Name of process to inject into (Change to lsass.exe for x64)','wlms.exe'])
 	], self.class)
